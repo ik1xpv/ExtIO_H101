@@ -2,7 +2,7 @@
 #define IDC_STATIC (-1)
 #endif
 
-#define VERSION   "ExtIO_H101.dll ver 0.12"
+#define VERSION   "ExtIO_H101.dll ver 0.13"
 
 #define IDD_RTL_SETTINGS                        100
 #define IDC_SAMPLERATE                          1000

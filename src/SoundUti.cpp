@@ -247,9 +247,13 @@ void CloseSoundConfig()
 	HWND hw;
 	hw = FindWindow(NULL, TEXT("Proprietà - Microphone"));
 	if (hw != NULL) CloseWindow(hw);
+	hw = FindWindow(NULL, TEXT("Proprietà - Microfono"));
+	if (hw != NULL) CloseWindow(hw);
 	hw = FindWindow(NULL, TEXT("Microphone properties"));
 	if (hw != NULL) CloseWindow(hw);
 	hw = FindWindow(NULL, TEXT("Proprietà - Speakers"));
+	if (hw != NULL) CloseWindow(hw);
+	hw = FindWindow(NULL, TEXT("Proprietà - Altoparlanti"));
 	if (hw != NULL) CloseWindow(hw);
 	hw = FindWindow(NULL, TEXT("Speakers properties"));
 	if (hw != NULL) CloseWindow(hw);
@@ -303,7 +307,7 @@ int Soundsetup(TCHAR * name)
 	if (hlistview == NULL) return -3; // no audio program
 
 
-	if ((_tcsstr(name, TEXT("Microphone")) == NULL) ||
+	if (((_tcsstr(name, TEXT("Microphone")) == NULL) && (_tcsstr(name, TEXT("Microfono")) == NULL))||
 		(_tcsstr(name, TEXT("USB Audio CODEC")) == NULL)) 
 		return -8;
 
@@ -338,7 +342,7 @@ int Soundsetup(TCHAR * name)
 		ReadProcessMemory(process, _item, item, 512, NULL);
 		ReadProcessMemory(process, _subitem, subitem, 512, NULL);
 
-		if ((_tcsstr(TEXT("Microphone  "), item) != NULL) &&
+		if (((_tcsstr(TEXT("Microphone  "), item) != NULL) || (_tcsstr(TEXT("Microfono  "), item) != NULL)) &&
 			(_tcsstr(TEXT("USB Audio CODEC  "), subitem) != NULL))
 			mikedevice = i;
 		_tprintf(TEXT("%s  %s\n"), item, subitem);
@@ -372,6 +376,8 @@ int Soundsetup(TCHAR * name)
 	{
 		Sleep(300);
 		hRecDevice = FindWindow(NULL, TEXT("Proprietà - Microphone"));
+		if (hRecDevice != NULL)  break;
+		hRecDevice = FindWindow(NULL, TEXT("Proprietà - Microfono"));
 		if (hRecDevice != NULL)  break;
 		hRecDevice = FindWindow(NULL, TEXT("Microphone properties"));
 		if (hRecDevice != NULL)  break;
@@ -465,7 +471,7 @@ int SoundPlaySetup(TCHAR * name)
 	if (hlistview == NULL) return -3; // no audio program
 
 
-	if ((_tcsstr(name, TEXT("Speakers")) == NULL) ||
+	if (((_tcsstr(name, TEXT("Speakers")) == NULL) && (_tcsstr(name, TEXT("Altoparlanti")) == NULL)) ||
 		(_tcsstr(name, TEXT("USB Audio CODEC")) == NULL))
 		return -8;
 
@@ -500,7 +506,7 @@ int SoundPlaySetup(TCHAR * name)
 		ReadProcessMemory(process, _item, item, 512, NULL);
 		ReadProcessMemory(process, _subitem, subitem, 512, NULL);
 
-		if ((_tcsstr(TEXT("Speakers  "), item) != NULL) &&
+		if (((_tcsstr(TEXT("Speakers  "), item) != NULL) || (_tcsstr(TEXT("Altoparlanti  "), item) != NULL)) &&
 			(_tcsstr(TEXT("USB Audio CODEC  "), subitem) != NULL))
 			{
 			spkrsdevice = i;
@@ -537,6 +543,8 @@ int SoundPlaySetup(TCHAR * name)
 	{
 		Sleep(300);
 		hRecDevice = FindWindow(NULL, TEXT("Proprietà - Speakers"));
+		if (hRecDevice != NULL)  break;
+		hRecDevice = FindWindow(NULL, TEXT("Proprietà - Altoparlanti"));
 		if (hRecDevice != NULL)  break;
 		hRecDevice = FindWindow(NULL, TEXT("Speakers properties"));
 		if (hRecDevice != NULL)  break;

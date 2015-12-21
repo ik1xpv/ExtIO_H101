@@ -346,13 +346,13 @@ bool  LIBRTL_API __stdcall OpenHW()
 	TCHAR tstro[MAXTCHAR];
 	ComboBox_GetText((GetDlgItem(h_dialog, IDC_AUDIOIN)), tstri, sizeof(tstri) / sizeof(TCHAR));
 	ComboBox_GetText((GetDlgItem(h_dialog, IDC_AUDIOOUT)), tstro, sizeof(tstro) / sizeof(TCHAR));
-	if ((_tcsstr(tstri, TEXT("Microphone")) == NULL) ||
+	if (((_tcsstr(tstri, TEXT("Microphone")) == NULL) && (_tcsstr(tstri, TEXT("Microfono")) == NULL)) ||
 		(_tcsstr(tstri, TEXT("USB Audio CODEC")) == NULL) ||
-		(_tcsstr(tstro, TEXT("Speakers")) == NULL) ||
+		((_tcsstr(tstro, TEXT("Speakers")) == NULL) && (_tcsstr(tstro, TEXT("Altoparlanti")) == NULL))||
 		(_tcsstr(tstro, TEXT("USB Audio CODEC")) == NULL))
 		{
 			MessageBox(NULL, 
-TEXT("Is H101 connected ? \nplease verify and press ok to exit\n\nH101 sound devices are: \nMicrophone (USB Audio CODEC)\nSpeakers (USB Audio CODEC)"),
+TEXT("Is H101 connected ? \nplease verify and press ok to exit\n\nH101 sound devices are: \nMicrophone (USB Audio CODEC) o Microfono (USB Audio CODEC)\nSpeakers (USB Audio CODEC) o Altoparlanti (USB Audio CODEC)"),
 				TEXT("Duplex USB audio device not found"), MB_ICONQUESTION);
 			ExitProcess(0);  // restart required
 		}
